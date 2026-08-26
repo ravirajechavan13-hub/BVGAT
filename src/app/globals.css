@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+:root {
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body {
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Keyframes ─────────────────────────────────────────── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes rowIn {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(-14px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes itemPop {
+  0%   { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pulseSoft {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+@keyframes shimmerLine {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+@keyframes spinSoft {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Utility animation classes ─────────────────────────── */
+.anim-fade-up   { animation: fadeSlideUp 0.5s var(--ease-out-soft) both; }
+.anim-row       { animation: rowIn 0.45s var(--ease-out-soft) both; }
+.anim-scale-in  { animation: scaleIn 0.35s var(--ease-out-soft) both; }
+.anim-toast     { animation: toastIn 0.4s var(--ease-out-soft) both; }
+.anim-item-pop  { animation: itemPop 0.35s var(--ease-out-soft) both; }
+.anim-pulse     { animation: pulseSoft 1.6s ease-in-out infinite; }
+.anim-spin      { animation: spinSoft 0.8s linear infinite; }
+
+/* Hover / press micro-interactions */
+.btn-press      { transition: transform 0.15s var(--ease-out-soft), box-shadow 0.2s, background-color 0.2s; }
+.btn-press:active { transform: scale(0.95); }
+
+.hover-lift     { transition: transform 0.2s var(--ease-out-soft), box-shadow 0.25s; }
+.hover-lift:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.45); border-radius: 9999px; }

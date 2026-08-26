@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BVGAT Sagar Store</string>
+    <string name="title_activity_main">BVGAT Sagar Store</string>
+    <string name="package_name">in.bvgat.sagarstore.inventory</string>
+    <string name="custom_url_scheme">in.bvgat.sagarstore.inventory</string>
+</resources>
