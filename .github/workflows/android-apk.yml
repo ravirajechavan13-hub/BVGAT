@@ -1,0 +1,59 @@
+name: Build Android APK
+
+# Har push par: static export + Capacitor sync + Gradle debug APK
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static export (APK me embedded hoga)
+        run: NEXT_APK_BUILD=1 npx next build
+
+      - name: Sync Capacitor (web app ko android folder me copy)
+        run: npx cap sync android
+
+      - name: Setup JDK 17 (Android Gradle ke liye)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Ensure Gradle wrapper jar exists (agar missing ho to download)
+        run: |
+          cd android
+          chmod +x gradlew 2>/dev/null || true
+          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+            VERSION=$(grep distributionUrl gradle/wrapper/gradle-wrapper.properties | sed 's/.*gradle-\([0-9.]*\)-all\.zip.*/\1/')
+            echo "gradle-wrapper.jar missing — downloading for Gradle $VERSION"
+            mkdir -p gradle/wrapper
+            curl -sSL -o gradle/wrapper/gradle-wrapper.jar "https://raw.githubusercontent.com/gradle/gradle/v${VERSION}/gradle/wrapper/gradle-wrapper.jar"
+            ls -la gradle/wrapper/gradle-wrapper.jar
+          fi
+
+      - name: Build Android Debug APK
+        run: |
+          cd android
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BVGAT-Sagar-Store-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30

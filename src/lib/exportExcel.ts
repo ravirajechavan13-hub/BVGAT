@@ -6,7 +6,6 @@ type Product = {
   productName: string;
   packingSize: string;
   uom: string;
-  directStock: number;
 };
 
 type EntryRow = {
@@ -203,7 +202,8 @@ export function exportStockExcel(
   inwards: Array<{ productId: number; inwardDate: string; quantity: number }>,
   outwards: Array<{ productId: number; outwardDate: string; quantity: number }>,
   from: string,
-  to: string
+  to: string,
+  mainStock: Record<number, number> = {}
 ) {
   const catOrder = [
     "BVG Products",
@@ -241,7 +241,7 @@ export function exportStockExcel(
       .reduce((s, o) => s + o.quantity, 0);
     const allIn = inwards.filter(i => i.productId === p.id).reduce((s, i) => s + i.quantity, 0);
     const allOut = outwards.filter(o => o.productId === p.id).reduce((s, o) => s + o.quantity, 0);
-    const direct = p.directStock || 0;
+    const direct = mainStock[p.id] || 0;
     const avail = direct + allIn - allOut;
     totIn += monthIn;
     totOut += monthOut;

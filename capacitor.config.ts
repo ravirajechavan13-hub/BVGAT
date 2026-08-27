@@ -1,19 +1,11 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
+// APK me app poori embedded hoti hai (static export) — koi server/URL zaroori nahi.
+// Data Google Sheet me save hota hai (app ke andar 📗 Sheet button se connect karo).
 const config: CapacitorConfig = {
   appId: "in.bvgat.sagarstore.inventory",
   appName: "BVGAT Sagar Store",
   webDir: "out",
-  // ────────────────────────────────────────────────────────────────
-  // APK is hosted web app ko load karta hai (database server-side hai)
-  // Apna live hosting URL yahan daalo — jaise:
-  //   "https://bvgat-sagar-store.vercel.app"
-  // Jitna bhi URL par app live ho, wahi yahan likho.
-  // ────────────────────────────────────────────────────────────────
-  server: {
-    androidScheme: "https",
-    // url: "https://YOUR-LIVE-APP-URL.com",
-  },
   android: {
     allowMixedContent: false,
   },
