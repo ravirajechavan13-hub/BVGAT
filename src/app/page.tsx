@@ -648,11 +648,11 @@ export default function App() {
               )}
 
               <div className="flex gap-2">
-                <button onClick={handleTestConnect} className="flex-1 h-10 rounded-xl bg-blue-700 hover:bg-blue-600 text-white text-xs font-bold btn-press">
+                <button type="button" onClick={handleTestConnect} className="flex-1 h-10 rounded-xl bg-blue-700 hover:bg-blue-600 text-white text-xs font-bold btn-press">
                   Test & Connect
                 </button>
                 {connected && (
-                  <button onClick={handleDisconnect} className="px-4 h-10 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold btn-press">
+                  <button type="button" onClick={handleDisconnect} className="px-4 h-10 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold btn-press">
                     Disconnect
                   </button>
                 )}
